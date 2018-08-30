@@ -1,6 +1,6 @@
 <?php
 
-include_once 'lib/nusoap.php';
+require_once 'lib/nusoap.php';
 $servicio = new soap_server();
 
 $ns = "urn:miserviciowsdl";
