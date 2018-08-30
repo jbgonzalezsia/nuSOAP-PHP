@@ -4,7 +4,7 @@ include_once 'lib/nusoap.php';
 $servicio = new soap_server();
 
 $ns = "urn:miserviciowsdl";
-$servicio->configureWSDL("MiPrimerServicioWeb",$ns);
+$servicio->configureWSDL("Web Service nuSOAP",$ns);
 $servicio->schemaTargetNamespace = $ns;
 
 $servicio->register("MiFuncion", array('num1' => 'xsd:integer', 'num2' => 'xsd:integer'), array('return' => 'xsd:string'), $ns );
