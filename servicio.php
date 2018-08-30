@@ -19,6 +19,4 @@ function MiFuncion($num1, $num2){
 
 $HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : '';
 $servicio->service($HTTP_RAW_POST_DATA);
-
-
 ?>
