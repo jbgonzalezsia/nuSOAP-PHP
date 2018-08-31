@@ -16,8 +16,8 @@ $server->register('MetodoConsulta',
 function MetodoConsulta($param_id,$param_txt) {
 
     // Conectamos y seleccionamos la base de datos 
-    $link = mysql_connect(SQL_SERVER,SQL_USER,SQL_PASS) or die("Error: ".mysql_error()); 
-    $ddbb = mysql_select_db(SQL_DB) or die("Error: ".mysql_error());
+    $link = mysql_connect(localhost,usr_webservice,w3bs3rv1c3) or die("Error: ".mysql_error()); 
+    $ddbb = mysql_select_db(db_webservice_nusoap) or die("Error: ".mysql_error());
     
     // Realizar una consulta MySQL 
     $query = "SELECT * FROM articulos WHERE id = '$param_id' AND txt = '$param_txt'"; 
@@ -40,5 +40,6 @@ function MetodoConsulta($param_id,$param_txt) {
     mysql_close($link); 
     
     }
-    
+    $HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : '';
+    $server->service($HTTP_RAW_POST_DATA);
 ?>
