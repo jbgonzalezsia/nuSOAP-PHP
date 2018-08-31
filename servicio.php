@@ -1,10 +1,12 @@
 <?php
+$GLOBALS['HTTP_RAW_POST_DATA'] = file_get_contents ('php://input');
+$HTTP_RAW_POST_DATA = $GLOBALS['HTTP_RAW_POST_DATA'];
 
-require_once 'lib/nusoap.php';
+include_once 'lib/nusoap.php';
 $servicio = new soap_server();
 
 $ns = "urn:miserviciowsdl";
-$servicio->configureWSDL("Web Service nuSOAP",$ns);
+$servicio->configureWSDL("MiPrimerServicioWeb",$ns);
 $servicio->schemaTargetNamespace = $ns;
 
 $servicio->register("MiFuncion", array('num1' => 'xsd:integer', 'num2' => 'xsd:integer'), array('return' => 'xsd:string'), $ns );
@@ -17,6 +19,6 @@ function MiFuncion($num1, $num2){
  
 }
 
-$HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : '';
 $servicio->service($HTTP_RAW_POST_DATA);
+
 ?>
