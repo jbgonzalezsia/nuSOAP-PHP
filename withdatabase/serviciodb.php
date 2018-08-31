@@ -1,20 +1,18 @@
 <?php
 include('lib/nusoap.php');
-$server = new soap_server();
-$server->configureWSDL('Servidor', 'urn:Servidor');
-
-$server->register('MetodoConsulta',
+$dbservicio = new soap_server();
+$dbservicio->configureWSDL('Web Service PHP MySQL - nuSOAP', 'urn:Servidor');
+$dbservicio->register('MetodoConsulta',
     array('param_id' => 'xsd:string','param_txt' => 'xsd:string'),
     array('return' => 'xsd:string'),
     'urn:MetodoConsultawsdl',
     'urn:MetodoConsultawsdl#MetodoConsulta',
     'rpc',
     'encoded',
-    'Retorna el datos'
+    'Retorna los datos'
 );
 
 function MetodoConsulta($param_id,$param_txt) {
-
     // Conectamos y seleccionamos la base de datos 
     $link = mysql_connect(localhost,usr_webservice,w3bs3rv1c3) or die("Error: ".mysql_error()); 
     $ddbb = mysql_select_db(db_webservice_nusoap) or die("Error: ".mysql_error());
@@ -41,5 +39,5 @@ function MetodoConsulta($param_id,$param_txt) {
     
     }
     $HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : '';
-    $server->service($HTTP_RAW_POST_DATA);
+    $dbservicio->service($HTTP_RAW_POST_DATA);
 ?>
