@@ -4,7 +4,7 @@ $GLOBALS['HTTP_RAW_POST_DATA'] = file_get_contents ('php://input');
 $HTTP_RAW_POST_DATA = $GLOBALS['HTTP_RAW_POST_DATA'];
 include('lib/nusoap.php');
 $dbservicio = new soap_server();
-
+$dbservicio->soap_defencoding = 'UTF-8';
 $ns = 'urn:Servidor';
 $dbservicio->configureWSDL('Web Service PHP MySQL - nuSOAP', $ns );
 
