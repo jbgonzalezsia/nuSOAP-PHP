@@ -1,12 +1,22 @@
+<!doctype html>
+<html>
+<head>
+<title>Title</title>
+<meta charset="utf-8"/>
+</head>
+<body>
 <?php
+
 include('lib/nusoap.php');
-$dbcliente = new nusoap_client('http://nusoapwebservice-one.local/withdatabase/serviciodb.php?wsdl','wsdl');
+$dbcliente = new nusoap_client('http://nusoapwebservice-one.local/withdatabase/serviciodb.php?wsdl', ['soap_version' => SOAP_1_2] );
 
 $err = $dbcliente->getError();
 if ($err) {	echo 'Error en Constructor' . $err ; }
 
 $param = array('param_id' => '2','param_txt' => 'DVD');
 $result = $dbcliente->call('MetodoConsulta', $param);
+
+
 
 if ($dbcliente->fault) {
 	echo 'Fallo';
@@ -20,4 +30,7 @@ if ($dbcliente->fault) {
 		print_r ($result);
 	}
 }
+
 ?>
+</body>
+</html>

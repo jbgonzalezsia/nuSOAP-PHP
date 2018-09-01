@@ -1,15 +1,23 @@
 <?php
+
+$GLOBALS['HTTP_RAW_POST_DATA'] = file_get_contents ('php://input');
+$HTTP_RAW_POST_DATA = $GLOBALS['HTTP_RAW_POST_DATA'];
 include('lib/nusoap.php');
 $dbservicio = new soap_server();
-$dbservicio->configureWSDL('Web Service PHP MySQL - nuSOAP', 'urn:Servidor');
+
+$ns = 'urn:Servidor';
+$dbservicio->configureWSDL('Web Service PHP MySQL - nuSOAP', $ns );
+
 $dbservicio->register('MetodoConsulta',
     array('param_id' => 'xsd:string','param_txt' => 'xsd:string'),
-    array('return' => 'xsd:string'),
+    array('return' => 'xsd:string'), $ns,
     'urn:MetodoConsultawsdl',
     'urn:MetodoConsultawsdl#MetodoConsulta',
+    // soapaction: (use default)
+    false,
     'rpc',
     'encoded',
-    'Retorna los datos'
+    'Retorna el datos'
 );
 
 function MetodoConsulta($param_id,$param_txt) {
@@ -38,6 +46,6 @@ function MetodoConsulta($param_id,$param_txt) {
     mysql_close($link); 
     
     }
-    $HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : '';
+ 
     $dbservicio->service($HTTP_RAW_POST_DATA);
 ?>
