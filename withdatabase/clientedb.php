@@ -8,8 +8,8 @@
 <?php
 
 include('lib/nusoap.php');
-$dbcliente = new nusoap_client('http://nusoapwebservice-one.local/withdatabase/serviciodb.php?wsdl', ['soap_version' => SOAP_1_2] );
-
+$dbcliente = new nusoap_client('http://nusoapwebservice-one.local/withdatabase/serviciodb.php?wsdl', 'wsdl');
+$dbcliente->soap_defencoding = 'UTF-8';
 $err = $dbcliente->getError();
 if ($err) {	echo 'Error en Constructor' . $err ; }
 
