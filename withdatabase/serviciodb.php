@@ -19,33 +19,22 @@ $dbservicio->register('MetodoConsulta',
     'encoded',
     'Retorna el datos'
 );
+function MetodoConsulta() {
+    $mysqli = mysqli_connect("127.0.0.1", "root", "", "db_webservice_nusoap");
+    $mysqli->set_charset("utf8");
+    $articulos = $mysqli->query("SELECT id,txt,precio FROM articulos");
 
-function MetodoConsulta($param_id,$param_txt) {
-    // Conectamos y seleccionamos la base de datos 
-    $link = mysql_connect(localhost,usr_webservice,w3bs3rv1c3) or die("Error: ".mysql_error()); 
-    $ddbb = mysql_select_db(db_webservice_nusoap) or die("Error: ".mysql_error());
+    // Check connection
+    if ($mysqli->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    } 
+    echo "Connected successfully<br>";
     
-    // Realizar una consulta MySQL 
-    $query = "SELECT * FROM articulos WHERE id = '$param_id' AND txt = '$param_txt'"; 
-    $result = mysql_query($query) or die('Consulta fallida: ' . mysql_error());
-    
-    // Tratamos los datos seleccionados 
-    $row = mysql_fetch_array($result);
-    
-    // Obtenemos los campos buscados 
-    $descripcion = $row['txt']; 
-    $precio = $row['precio'];
-    
-    // Devolvemos el descriptivo y el precio consultado 
-    return "RESULTADO = ".strtoupper($descripcion)." ".strtoupper($precio)."€";
-    
-    // Liberar resultados 
-    mysql_free_result($result);
-    
-    // Cerrar la conexión 
-    mysql_close($link); 
-    
-    }
- 
-    $dbservicio->service($HTTP_RAW_POST_DATA);
+    $ArrArticulos = [];
+	while ($articulo = mysqli_fetch_array($articulos,MYSQLI_ASSOC)) {
+		$ArrArticulos[] = $articulo ;
+	}     
+    return json_encode($ArrArticulos);
+}
+echo MetodoConsulta();
 ?>
