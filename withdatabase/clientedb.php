@@ -1,14 +1,15 @@
 <!doctype html>
 <html>
 <head>
-<title>Title</title>
+<title>nuSOAP</title>
 <meta charset="utf-8"/>
 </head>
 <body>
 <?php
 
 include('lib/nusoap.php');
-$dbcliente = new nusoap_client('http://nusoapwebservice-one.local/withdatabase/serviciodb.php?wsdl', 'wsdl');
+$url="http://nusoapwebservice-one.local/withdatabase/serviciodb.php";
+$dbcliente = new nusoap_client($url."?wsdl", 'wsdl');
 $dbcliente->soap_defencoding = 'UTF-8';
 $err = $dbcliente->getError();
 if ($err) {	echo 'Error en Constructor' . $err ; }
