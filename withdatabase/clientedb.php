@@ -1,37 +1,14 @@
-<!doctype html>
-<html>
-<head>
-<title>nuSOAP</title>
-<meta charset="utf-8"/>
-</head>
-<body>
-<?php
+<?php 
 
-include('lib/nusoap.php');
-$url="http://nusoapwebservice-one.local/withdatabase/serviciodb.php";
-$dbcliente = new nusoap_client($url."?wsdl", 'wsdl');
-$dbcliente->soap_defencoding = 'UTF-8';
-$err = $dbcliente->getError();
-if ($err) {	echo 'Error en Constructor' . $err ; }
-
-$param = array('param_id' => '2','param_txt' => 'DVD');
-$result = $dbcliente->call('MetodoConsulta', $param);
+require_once "lib/nusoap.php";
 
 
+$client = new nusoap_client("http://nusoapwebservice-one.local/withdatabase/serviciodb.php?wsdl");
+$vehiculos = $client->call("cargarVehiculos");
+$vehiculos = json_decode($vehiculos);
 
-if ($dbcliente->fault) {
-	echo 'Fallo';
-	print_r($result);
-} else {	// Chequea errores
-	$err = $dbcliente->getError();
-	if ($err) {		// Muestra el error
-		echo 'Error' . $err ;
-	} else {		// Muestra el resultado
-		echo 'Resultado';
-		print_r ($result);
-	}
-}
-
-?>
-</body>
-</html>
+echo "<ul>";
+foreach ($vehiculos as $vehiculo) {
+	echo "<li>ID:".$vehiculo->id." - TXT:".$vehiculo->txt." - PRECIO:".$vehiculo->precio." "."</li>";
+} 
+echo "</ul>";
